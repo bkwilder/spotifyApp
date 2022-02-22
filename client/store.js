@@ -4,9 +4,25 @@ import {composeWithDevTools} from 'redux-devtools-extension'
 import {createLogger} from 'redux-logger'
 import { applyMiddleware } from 'redux'
 
+const SET_CODE = 'SET_CODE'
 
-const reducer = (state = {}, action) => {
-    return state
+export const setCode = (code) =>{
+  return {
+    type: SET_CODE, 
+    code,
+  }
+}
+
+const initialState = {code: ''}
+const reducer = (state = initialState, action) => {
+  switch (action.type) {
+    case SET_CODE:
+      return {...state, code: action.code}
+  
+    default:
+      return state
+  }
+    
 }
 
 const middleware = composeWithDevTools(
