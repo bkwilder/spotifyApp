@@ -1,18 +1,20 @@
+require('dotenv').config();
 const path = require('path');
 const express = require('express');
 const morgan = require('morgan');
-// const db = require('./db');
+const querystring = require('querystring')
+const axios = require('axios')
 const PORT = process.env.PORT || 8080;
 const app = express();
-// const server = app.listen(PORT, () => console.log(`Connected to port: ${PORT}`));
-// const io = require('socket.io')(server);
 
-// handle sockets
-// require('./socket')(io);
+const CLIENT_ID = process.env.CLIENT_ID
+const CLIENT_SECRET = process.env.CLIENT_SECRET
+const REDIRECT_URI = process.env.REDIRECT_URI
+
 
 module.exports = app;
 app.listen(PORT, () => console.log(`Connected to port: ${PORT}`))
-// db.sync().then(() => console.log('Database is synced'));
+
 
 // logging middleware
 app.use(morgan('dev'));
@@ -25,8 +27,63 @@ app.use(express.static(path.join(__dirname, '..', 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// 'API' routes
-// app.use('/api', require('./api'));
+//routes
+app.get('/login', (req, res, next) => {
+  try {
+    let url = 'https://accounts.spotify.com/authorize'
+    url += "?client_id=" + CLIENT_ID;
+    url += "&response_type=code";
+    url += "&redirect_uri=" + encodeURI(REDIRECT_URI);
+    url += "&show_dialog=true";
+    url += "&scope=user-read-private user-read-email user-modify-playback-state user-read-playback-position user-library-read streaming user-read-playback-state user-read-recently-played playlist-read-private user-top-read";
+    res.redirect(url)
+  } catch (error) {
+    next(error)
+  }
+})
+
+app.get('/callback', (req, res) => {
+  const code = req.query.code || null;
+  const client= `${CLIENT_ID}:${CLIENT_SECRET}`
+  let params = new URLSearchParams();
+  params.append('grant_type', 'authorization_code');
+  params.append('code', code);
+  params.append('redirect_uri', REDIRECT_URI);
+
+  axios({
+    method: 'post',
+    url: 'https://accounts.spotify.com/api/token',
+    data: params,
+    headers: {
+      'content-type': 'application/x-www-form-urlencoded',
+      Authorization: `Basic ${new Buffer.from(client).toString('base64')}`,
+    },
+  }) .then(response => {
+    if (response.status === 200) {
+
+      const { access_token, token_type } = response.data;
+
+      axios.get('https://api.spotify.com/v1/me/top/tracks?limit=50', {
+        headers: {
+          Authorization: `${token_type} ${access_token}`
+        }
+      })
+        .then(response => {
+          res.send(`<pre>${JSON.stringify(response.data, null, 2)}</pre>`);
+        })
+        .catch(error => {
+          res.send(error);
+        });
+
+    } else {
+      res.send(response);
+    }
+  })
+  .catch(error => {
+    res.send(error);
+  });
+})
+
 
 
 // 404 middleware
