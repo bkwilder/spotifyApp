@@ -35,12 +35,12 @@ app.use((req, res, next) =>
     next()
 );
 
-// send index.html
+// send index.html to use SPA, all paths send the index.html file
 app.use('*', (req, res, next) =>
   res.sendFile(path.join(__dirname, '..', 'public/index.html'))
 );
 
-// error handling endware
+// error handling endware, 500 status is not sent to server so this allows us to log the error and see it.
 app.use((err, req, res, next) =>
   res.status(err.status || 500).send(err.message || 'Internal server error.')
 );
