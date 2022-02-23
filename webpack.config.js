@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-    entry: [
+    entry: ["regenerator-runtime/runtime.js",
       './client/index.js'
     ],
     output: {

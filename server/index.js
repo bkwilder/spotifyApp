@@ -60,21 +60,8 @@ app.get('/callback', (req, res) => {
     },
   }) .then(response => {
     if (response.status === 200) {
-
-      const { access_token, token_type } = response.data;
-
-      axios.get('https://api.spotify.com/v1/me/top/tracks?limit=50', {
-        headers: {
-          Authorization: `${token_type} ${access_token}`
-        }
-      })
-        .then(response => {
-          res.send(`<pre>${JSON.stringify(response.data, null, 2)}</pre>`);
-        })
-        .catch(error => {
-          res.send(error);
-        });
-
+      const { access_token, refresh_token, token_type } = response.data;
+      res.redirect(`http://localhost:8080/top-tracks?accesstoken=${access_token}&refreshtoken=${refresh_token}&tokentype=${token_type}`)
     } else {
       res.send(response);
     }
@@ -84,6 +71,42 @@ app.get('/callback', (req, res) => {
   });
 })
 
+app.get('/tracks', async (req, res, next) => {
+  const token_type = req.query.tokentype;
+  const access_token = req.query.accesstoken;
+  axios.get('https://api.spotify.com/v1/me/top/tracks?limit=50', {
+    headers: {
+      Authorization: `${token_type} ${access_token}`
+    }
+  })
+    .then(response => {
+      
+      const trackIds = response.data.items.map(track => track.id)
+      res.send(trackIds);
+    })
+    .catch(error => {
+      res.send(error);
+    });
+})
+
+app.get('/genres', async (req, res, next) => {
+  const token_type = req.query.tokentype;
+  const access_token = req.query.accesstoken;
+  const trackIds = req.query.trackids
+  axios.get(`https://api.spotify.com/v1/tracks?limit=50&ids=${trackIds}`, {
+    headers: {
+      Authorization: `${token_type} ${access_token}`
+    }
+  })
+    .then(response => {
+      console.log(response.data)
+      console.log(response.data.tracks.map(track => track.artists))
+      res.send(response.data);
+    })
+    .catch(error => {
+      res.send(error);
+    });
+})
 
 
 // 404 middleware

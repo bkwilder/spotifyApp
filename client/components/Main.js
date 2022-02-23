@@ -1,48 +1,30 @@
-import React, {Component} from 'react'
-import Authorization from './Authorization'
-import { setCode } from '../store';
-import { connect } from 'react-redux'
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Route, Routes, Redirect } from "react-router-dom";
+import HomePage from "./HomePage";
+import TopTrackList from "./TopTrackList";
 
-
-class Main extends Component{
-
-
-    componentDidMount(){
-        if(window.location.search.length > 0) {
-            this.getCode();
-        }
-    }
-
-    getCode(){
-        const queryString = window.location.search;
-        if ( queryString.length > 0 ){
-            const urlParams = new URLSearchParams(queryString);
-            let code = urlParams.get('code')
-            this.props.setCode(code);
-        }
-
-    }
-    render(){
-        return (
-            <div>
-                <h1>Start Here!</h1>
-                <Authorization/>
-            </div>
-        )
-    }
+class Main extends Component {
+  render() {
+    return (
+      <div>
+        <Routes>
+            <Route exact path="/" element={<HomePage/>} />
+            <Route path="/top-tracks/" element={<TopTrackList/>}/>
+        </Routes>
+      </div>
+    );
+  }
 }
 
 function mapStateToProps(state) {
-    return {
-      code: state.code
-    }
-   }
-
-function mapDispatchToProps(dispatch) {
-    return {
-        setCode: (code) => {dispatch(setCode(code))}
-    }
+  return {
+    tracks: state.tracks,
+  };
 }
-   
-   
-   export default connect(mapStateToProps, mapDispatchToProps)(Main)
+
+// function mapDispatchToProps(dispatch) {}
+
+export default connect(mapStateToProps, null)(Main);
+
+
