@@ -25,8 +25,8 @@ export default class ErrorBoundary extends React.Component {
       if (this.state.hasError) {
         return (
         <div>
-        <h1>That project or robot does not exist!</h1>
-        <center><Link onClick={this.handleClick} to='/' style={{color:'#5f6062ff'}}>Go Home</Link></center>
+        <h1>There was an error! You might need to login to Spotify Again.</h1>
+        <center><Link onClick={this.handleClick} to='/' style={{color:'#5f6062ff'}}>Start Over</Link></center>
         </div>
         )
       }

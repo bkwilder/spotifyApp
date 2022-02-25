@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getTopArtists, getGenres } from "../store";
 import "regenerator-runtime/runtime";
-import Example, { Example2 } from "./PieChart";
+import { GeneralGenresPieChart } from "./PieChart";
 
 class TopGenresList extends Component {
   constructor() {
@@ -67,8 +67,7 @@ class TopGenresList extends Component {
     return (
       <div className='container'>
         <h1>Your Top Genres!</h1>
-        {/* <Example genreCount={this.state.genreCount} /> */}
-        <div className='pie-chart'><Example2 generalGenres={this.state.generalGenres} /></div>
+        <div className='pie-chart'><GeneralGenresPieChart generalGenres={this.state.generalGenres} /></div>
         <div className='genre-list'>
             <h3>Detailed Top Genre List:</h3>
         <ul>
