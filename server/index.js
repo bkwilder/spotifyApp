@@ -41,15 +41,16 @@ app.get("/login", (req, res, next) => {
   }
 });
 
-app.get("/callback", (req, res) => {
-  const code = req.query.code || null;
+app.get("/callback", async (req, res) => {
+  try {
+    const code = req.query.code || null;
   const client = `${CLIENT_ID}:${CLIENT_SECRET}`;
   let params = new URLSearchParams();
   params.append("grant_type", "authorization_code");
   params.append("code", code);
   params.append("redirect_uri", REDIRECT_URI);
 
-  axios({
+  const response = await axios({
     method: "post",
     url: "https://accounts.spotify.com/api/token",
     data: params,
@@ -58,8 +59,7 @@ app.get("/callback", (req, res) => {
       Authorization: `Basic ${new Buffer.from(client).toString("base64")}`,
     },
   })
-    .then((response) => {
-      if (response.status === 200) {
+    if (response.status === 200) {
         const { access_token, refresh_token, token_type } = response.data;
         res.redirect(
           `http://localhost:8080/top-tracks?accesstoken=${access_token}&refreshtoken=${refresh_token}&tokentype=${token_type}`
@@ -67,49 +67,44 @@ app.get("/callback", (req, res) => {
       } else {
         res.send(response);
       }
-    })
-    .catch((error) => {
-      res.send(error);
-    });
-});
+  } catch (error) {
+    next(error)
+  }
+})
 
 app.get("/tracks", async (req, res, next) => {
-  const token_type = req.query.tokentype;
-  const access_token = req.query.accesstoken;
-  axios
-    .get("https://api.spotify.com/v1/me/top/artists?limit=50", {
-      headers: {
-        Authorization: `${token_type} ${access_token}`,
-      },
-    })
-    .then((response) => {
+  try {
+    const token_type = req.query.tokentype;
+    const access_token = req.query.accesstoken;
+    const response = await axios.get("https://api.spotify.com/v1/me/top/artists?limit=50", {
+        headers: {
+          Authorization: `${token_type} ${access_token}`,
+        },
+      })
       const artistIds = response.data.items.map((artist) => artist.id);
       res.send(artistIds);
-    })
-    .catch((error) => {
-      res.send(error);
-    });
+  } catch (error) {
+    next(error)
+  }
 });
 
 app.get("/genres", async (req, res, next) => {
-  const token_type = req.query.tokentype;
-  const access_token = req.query.accesstoken;
-  const artistIds = req.query.trackids;
-  axios
-    .get(`https://api.spotify.com/v1/artists?limit=50&ids=${artistIds}`, {
-      headers: {
-        Authorization: `${token_type} ${access_token}`,
-      },
-    })
-    .then((response) => {
-      console.log(response.data);
-      console.log(response.data.artists.map((artist) => artist.genres));
-      res.send(response.data);
-    })
-    .catch((error) => {
-      res.send(error);
-    });
-});
+  try {
+    const token_type = req.query.tokentype;
+    const access_token = req.query.accesstoken;
+    const response = await axios.get("https://api.spotify.com/v1/me/top/artists?limit=50", {
+        headers: {
+          Authorization: `${token_type} ${access_token}`,
+        },
+      })
+     const artistGenres = response.data.items.map((artist) => artist.genres).flat();
+    res.send(artistGenres);
+    
+  } catch (error) {
+    next(error)
+  }
+}
+)
 
 // 404 middleware
 app.use((req, res, next) =>
