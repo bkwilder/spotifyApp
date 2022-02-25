@@ -15,8 +15,9 @@ class Authorization extends Component{
 
     render() {
         return (
-            <div>
-                <button id='authorization' onClick={this.requestAuthorization}>Click here to login to Spotify!</button>
+            <div className='welcome'>
+                <h1>What are your top listened to genres in Spotify?</h1>
+                <button className='login' id='authorization' onClick={this.requestAuthorization}>Click here to find out!</button>
             </div>
         )
     }

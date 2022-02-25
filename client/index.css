@@ -1,3 +1,73 @@
-h1 {
-    color: blue;
+* {
+    font-family: Georgia, 'Times New Roman', Times, serif;
 }
+h1 {
+    text-align: center;
+    color: #345995;
+}
+h3 {
+    text-align: center;
+}
+
+ul {
+    column-count: 6;
+}
+
+.welcome {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 150px;
+    padding-bottom: 150px;
+    border: 20px solid;
+    border-color: #345995;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.genre-list {
+    background-color: #345995;
+    color:#f4b333;
+    border: 10px solid;
+    border-image: linear-gradient(45deg, #e40066, #f4b333) 1;
+}
+
+
+
+
+
+.login {
+  background-color: #cf245f;
+  background-image: linear-gradient(to bottom right, #fcd34d, #ef4444, #ec4899);
+  border: 0;
+  border-radius: .25rem;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  font-size: 1.125rem; /* 18px */
+  font-weight: 600;
+  line-height: 1.75rem; /* 28px */
+  padding: 1rem 1.25rem;
+  text-align: center;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.login:hover {
+  box-shadow: none;
+}
+
+@media (min-width: 1024px) {
+  .login {
+    font-size: 1.5rem; /* 24px */
+    padding: 1rem 1.5rem;
+    line-height: 2rem; /* 32px */
+  }
+}
+
+/* '#345995','#e40066','#03cea4','#f4b333','#fb4d3d' */

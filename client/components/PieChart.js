@@ -1,32 +1,5 @@
 import React, { PureComponent } from 'react';
-import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from 'recharts';
-
-const data01 = [
-    {
-      "name": "Group A",
-      "value": 400
-    },
-    {
-      "name": "Group B",
-      "value": 300
-    },
-    {
-      "name": "Group C",
-      "value": 300
-    },
-    {
-      "name": "Group D",
-      "value": 200
-    },
-    {
-      "name": "Group E",
-      "value": 278
-    },
-    {
-      "name": "Group F",
-      "value": 189
-    }
-  ];
+import { PieChart, Pie, Cell} from 'recharts';
 
 export default class Example extends PureComponent {
    constructor(){
@@ -44,6 +17,41 @@ export default class Example extends PureComponent {
     return (
         <PieChart width={730} height={500}>
             <Pie data={this.props.genreCount} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={200} label={this.renderLabel} fill="#8884d8" />
+        </PieChart>
+    );
+  }
+}
+
+
+export class Example2 extends PureComponent {
+   constructor(){
+       super();
+       this.state = {
+           colors: ['#345995','#e40066','#03cea4','#f4b333','#fb4d3d']
+       }
+       this.renderLabel=this.renderLabel.bind(this)
+    //    this.renderColor =this.renderColor.bind(this)
+   }
+   renderLabel(entry) {
+        return entry.name;  
+    }
+
+    // renderColor(entry) {
+    //     console.log(entry)
+    //     return '#345995'
+    //     // return 
+    // }
+
+  render() {
+    return (
+        <PieChart width={730} height={500}>
+            <Pie data={this.props.generalGenres} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={200} label={this.renderLabel}>
+            {this.props.generalGenres.map((entry, index) => (
+                 <Cell key={`cell-${index}`} fill={this.state.colors[index % this.state.colors.length]}/>
+            ))
+            }
+            </Pie>
+
         </PieChart>
     );
   }
