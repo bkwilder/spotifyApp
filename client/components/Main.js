@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Route, Routes, Redirect } from "react-router-dom";
-import HomePage from "./HomePage";
+import Authorization from './Authorization'
 import TopGenresList from "./TopGenresList";
 
 class Main extends Component {
@@ -9,7 +9,7 @@ class Main extends Component {
     return (
       <div>
         <Routes>
-            <Route exact path="/" element={<HomePage/>} />
+            <Route exact path="/" element={<Authorization />} />
             <Route path="/top-genres/" element={<TopGenresList/>}/>
         </Routes>
       </div>

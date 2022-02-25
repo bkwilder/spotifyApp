@@ -1,11 +1,15 @@
 * {
-    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-family: 'Poppins', Sans-Serif;
 }
 h1 {
+    font-family:'Abril Fatface', Cursive;
+    font-size: 40px;
     text-align: center;
     color: #345995;
 }
 h3 {
+    font-family:'Abril Fatface', Cursive;
+    font-size: 30px;
     text-align: center;
 }
 
@@ -33,7 +37,8 @@ ul {
     background-color: #345995;
     color:#f4b333;
     border: 10px solid;
-    border-image: linear-gradient(45deg, #e40066, #f4b333) 1;
+    border-color: #f4b333;
+    /* border-image: linear-gradient(45deg, #e40066, #f4b333) 1; */
 }
 
 

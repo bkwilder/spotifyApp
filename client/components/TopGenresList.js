@@ -63,7 +63,6 @@ class TopGenresList extends Component {
   }
 
   render() {
-    console.log(this.state.generalGenres);
     return (
       <div className='container'>
         <h1>Your Top Genres!</h1>
