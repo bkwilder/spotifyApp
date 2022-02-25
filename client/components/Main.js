@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Route, Routes, Redirect } from "react-router-dom";
 import HomePage from "./HomePage";
-import TopTrackList from "./TopTrackList";
+import TopGenresList from "./TopGenresList";
 
 class Main extends Component {
   render() {
@@ -10,7 +10,7 @@ class Main extends Component {
       <div>
         <Routes>
             <Route exact path="/" element={<HomePage/>} />
-            <Route path="/top-tracks/" element={<TopTrackList/>}/>
+            <Route path="/top-tracks/" element={<TopGenresList/>}/>
         </Routes>
       </div>
     );

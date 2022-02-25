@@ -72,7 +72,7 @@ app.get("/callback", async (req, res) => {
   }
 })
 
-app.get("/tracks", async (req, res, next) => {
+app.get("/artists", async (req, res, next) => {
   try {
     const token_type = req.query.tokentype;
     const access_token = req.query.accesstoken;

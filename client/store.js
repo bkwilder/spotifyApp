@@ -7,7 +7,7 @@ import axios from 'axios'
 import 'regenerator-runtime/runtime'
 
 const SET_GENRES = 'SET_GENRES'
-const SET_TRACKS = 'SET_TRACKS'
+const SET_ARTISTS = 'SET_ARTISTS'
 const LOGIN = 'LOGIN'
 //ACTION CREATORS
 
@@ -17,10 +17,10 @@ export const loginView = () => {
   }
 }
 
-export const setTracks = (tracks) => {
+export const setArtists = (artists) => {
   return {
-    type: SET_TRACKS,
-    tracks
+    type: SET_ARTISTS,
+    artists
   }
 }
 export const setGenres = (genres =>{
@@ -33,10 +33,10 @@ export const setGenres = (genres =>{
 
 
 //THUNK CREATORS
-export const getTopTracks = (tokenType, accessToken) => {
+export const getTopArtists = (tokenType, accessToken) => {
   return async (dispatch) => {
-    const {data} = await axios.get(`/tracks?tokentype=${tokenType}&accesstoken=${accessToken}`)
-    dispatch(setTracks(data))
+    const {data} = await axios.get(`/artists?tokentype=${tokenType}&accesstoken=${accessToken}`)
+    dispatch(setArtists(data))
   }
 }
 
@@ -62,8 +62,8 @@ const reducer = (state = initialState, action) => {
     case SET_GENRES:
       return {...state, genres: action.genres}
       
-    case SET_TRACKS:
-      return {...state, tracks: action.tracks}
+    case SET_ARTISTS:
+      return {...state, artists: action.artists}
 
     default:
       return state
