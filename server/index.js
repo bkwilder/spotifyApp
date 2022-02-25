@@ -62,7 +62,7 @@ app.get("/callback", async (req, res) => {
     if (response.status === 200) {
         const { access_token, refresh_token, token_type } = response.data;
         res.redirect(
-          `http://localhost:8080/top-tracks?accesstoken=${access_token}&refreshtoken=${refresh_token}&tokentype=${token_type}`
+          `http://localhost:8080/top-genres?accesstoken=${access_token}&refreshtoken=${refresh_token}&tokentype=${token_type}`
         );
       } else {
         res.send(response);

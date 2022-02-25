@@ -10,7 +10,7 @@ class Main extends Component {
       <div>
         <Routes>
             <Route exact path="/" element={<HomePage/>} />
-            <Route path="/top-tracks/" element={<TopGenresList/>}/>
+            <Route path="/top-genres/" element={<TopGenresList/>}/>
         </Routes>
       </div>
     );
