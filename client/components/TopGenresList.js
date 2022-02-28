@@ -10,6 +10,7 @@ class TopGenresList extends Component {
     this.state = {
       genreCount: [],
       generalGenres: [],
+      errorStatus: false,
     };
   }
 
@@ -60,9 +61,20 @@ class TopGenresList extends Component {
     });
 
     this.setState({ genreCount: genreCount, generalGenres: generalGenres });
+    // if(genreCount.length === 0 || genreCount[0].includes('404')) {
+    //   this.setState({...state, errorStatus: true})
+    // }
   }
 
   render() {
+    if(this.state.errorStatus){
+      return (
+        <div>
+          <h1>There was an error getting your genres!</h1>
+        </div>
+      )
+    }
+  
     return (
       <div className='container'>
         <h1>Your Top Genres!</h1>

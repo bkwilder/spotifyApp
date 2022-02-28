@@ -1,16 +1,19 @@
 * {
     font-family: 'Poppins', Sans-Serif;
 }
+
 h1 {
     font-family:'Abril Fatface', Cursive;
     font-size: 40px;
     text-align: center;
     color: #345995;
+    letter-spacing: .2rem;
 }
 h3 {
     font-family:'Abril Fatface', Cursive;
     font-size: 30px;
     text-align: center;
+    letter-spacing: .2rem;
 }
 
 ul {
@@ -23,21 +26,27 @@ ul {
     align-items: center;
     padding-top: 150px;
     padding-bottom: 150px;
-    border: 20px solid;
-    border-color: #345995;
+    justify-content: space-between;
+    /* border: 20px solid;
+    border-color: #345995; */
+}
+.heading {
+  padding: 60px;
 }
 
 .container {
     display: flex;
     flex-direction: column;
     align-items: center;
+    
 }
 
 .genre-list {
     background-color: #345995;
-    color:#f4b333;
+    color:#03cea4;
     border: 10px solid;
-    border-color: #f4b333;
+    border-color: #03cea4;
+    border-radius: 30px
     /* border-image: linear-gradient(45deg, #e40066, #f4b333) 1; */
 }
 
@@ -46,8 +55,8 @@ ul {
 
 
 .login {
-  background-color: #cf245f;
-  background-image: linear-gradient(to bottom right, #fcd34d, #ef4444, #ec4899);
+  background-color: #345995;
+  background-image: linear-gradient(to bottom right, #03cea4, #345995);
   border: 0;
   border-radius: .25rem;
   box-sizing: border-box;
@@ -64,7 +73,7 @@ ul {
 }
 
 .login:hover {
-  box-shadow: none;
+  background-image: linear-gradient(45deg, #e40066, #f4b333) ;
 }
 
 @media (min-width: 1024px) {
